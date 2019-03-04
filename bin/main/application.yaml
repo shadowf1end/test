@@ -1,0 +1,72 @@
+server:
+  port: 8888
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+
+spring:
+  # 数据源
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/nuoche?useUnicode=true&characterEncoding=utf-8&useSSL=false&autoConnect=true&serverTimezone=Asia/Shanghai
+    username: root
+    password:
+    type: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    hikari:
+      connectionInitSql: set names utf8mb4 COLLATE utf8mb4_unicode_ci
+      connectionTestQuery: select 1
+
+  # Spring Data JPA
+  jpa:
+    show-sql: true
+    # 自动生成表结构
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: true
+
+
+  # Redis
+  redis:
+    # 数据库索引 默认0
+    database: 0
+    timeout: 10000ms
+    lettuce:
+      pool:
+        max-idle: 10
+        max-active: 10
+        min-idle: 5
+        max-wait: 10000ms
+
+# 日志
+logging:
+  file: ../logs/nuoche.log
+  level:
+    root: warn
+    com.zaxxer.hikari.pool.HikariPool: warn
+    org.apache.catalina.session.ManagerBase: warn
+    sun.rmi: warn
+    org.mongodb.driver.cluster: warn
+
+# WeChat
+wx:
+  appId: wxb97a3c9656722a35
+  appSecret: c06a8bb5f5eb0f50a9d064b5809d594b
+  mchId: 1498191192
+  mchKey: d6b5149ec1e4664ffd2004225609cc0d
+
+# 忽略鉴权url
+ignored:
+  ignoredUrls:
+    - /wechatUser/login
+    - /image/list
+    - /bundling/test
+    - /bundling/state
+
+#bargain:
+#  firstMaxPct: 0.1
+#  firstMinPct: 0.08
+#  maxPct: 500
+#  minPct: 200
